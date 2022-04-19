@@ -9,4 +9,7 @@ conda activate ML_project_env_v1
 
 # Use below command or install requirements via DataSpell UI, if possible (recommended)
 conda install --file requirements.txt
+
+# Run TensorBoard to see NN training progress
+tensorboard --logdir logs/fit
 ```
