@@ -13,3 +13,11 @@ def run_sequence_plot(df, y_column, title, from_datetime=None, to_datetime=None)
     plt.title(title)
     plt.grid(alpha=0.3)
     plt.show()
+
+
+def run_simple_sequence_plot(x, y, title, xlabel="time", ylabel="series"):
+    plt.plot(x, y, 'k-')
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(alpha=0.3)
