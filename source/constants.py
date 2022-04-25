@@ -1,4 +1,5 @@
-FORECAST_PERIOD = 24
+FORECAST_PERIOD = 24 * 3
+DECOMPOSED_SHIFT = FORECAST_PERIOD // 2 + (FORECAST_PERIOD // 2) % 24  # round to the closest number of days
 
 FEATURES_LAGS = [24 * i for i in range(1, 6)]
 RADIATION_LAGS = [24 * i for i in range(1, 6)]
