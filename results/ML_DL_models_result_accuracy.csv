@@ -1,0 +1,7 @@
+,Iteration,Stationary_Series_Name,Model_Name,Model_Params,Mean Absolute Percentage Error (MAPE),Mean Percentage Error (MPE),Root Mean Squared Error (RMSE)
+0,1,SARIMAX_radiation,SARIMAX model,"(0, 2, 1)",12.95,12.90,176.12
+1,2,SARIMAX_radiation,SARIMAX model,"(1, 2, 0)",13.29,13.16,110.32
+2,3,SARIMAX_radiation,SARIMAX model,"(2, 2, 2)",10.24,10.06,119.37
+0,1,additive_radiation,Conv1d model,"[30, 64, 100]",2.04,1.74,142.99
+1,2,additive_radiation,Conv1d model,"[30, 64, 100]",9.64,9.48,125.77
+2,3,additive_radiation,Random Forest,"[100, 100]",1.55,1.28,97.88
