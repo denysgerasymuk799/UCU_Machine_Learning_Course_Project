@@ -1,3 +1,4 @@
+import io
 import pandas as pd
 
 from datetime import timedelta
@@ -6,8 +7,9 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from web_server.domain_logic.constants import *
-from web_server.domain_logic.service import predict_out_of_df
-from init_config import reconstructed_model, delta_scaler, N_FORECASTED_PERIODS, hourly_radiation_df
+from web_server.domain_logic.service import predict_out_of_df, find_nth
+from init_config import reconstructed_model, delta_scaler, N_FORECASTED_PERIODS, hourly_radiation_df, \
+    s3_client, s3_bucket_name, trend_obj, seasonal_obj, hourly_radiation_obj
 
 app = FastAPI()
 
@@ -18,8 +20,7 @@ class Item(BaseModel):
 
 @app.get("/forecast_report")
 async def get_forecast_report():
-    # with open(HOME_DIR + '/results/report.html', 'r') as html_file:
-    with open('./report.html', 'r') as html_file:
+    with open('./results/report.html', 'r') as html_file:
         content = html_file.read()
 
     return HTMLResponse(content=content, status_code=200)
@@ -29,12 +30,16 @@ async def get_forecast_report():
 async def load_features(request: Item):
     global hourly_radiation_df, N_FORECASTED_PERIODS
 
-    delta_features_path = request.delta_features_path
+    delta_features_path = request.delta_features_path.strip()
+    n_pos = find_nth(delta_features_path, '/', 3)
+    s3_key = delta_features_path[n_pos + 1:]
 
     # Load feature df for the last 3 days.
     # Note that Radiation is one of columns in delta_features,
     # since we use values of Radiation for the last 3 days as a feature
-    delta_features = pd.read_csv(delta_features_path)
+    obj = s3_client.get_object(Bucket=s3_bucket_name, Key=s3_key)
+
+    delta_features = pd.read_csv(io.BytesIO(obj['Body'].read()))
     delta_features['Hourly_DateTime'] = pd.to_datetime(delta_features['Hourly_DateTime'])
     forecast_datetime_range = delta_features['Hourly_DateTime'] + timedelta(days=FORECAST_DAYS)
 
@@ -56,14 +61,11 @@ async def reset_variables():
     N_FORECASTED_PERIODS = 1
 
     # Import trend and seasonality to use them during forecasting
-    multiplicative_decomposed_trend = pd.read_csv(HOME_DIR + '/results/multiplicative_decomposed_trend_v1.csv',
-                                                  header=0, index_col=0, squeeze=True)
-    multiplicative_decomposed_seasonal = pd.read_csv(HOME_DIR + '/results/multiplicative_decomposed_seasonal_v1.csv',
-                                                     header=0, index_col=0, squeeze=True)
+    multiplicative_decomposed_trend = pd.read_csv(trend_obj, header=0, index_col=0, squeeze=True)
+    multiplicative_decomposed_seasonal = pd.read_csv(seasonal_obj, header=0, index_col=0, squeeze=True)
 
     # For Google Colab here is path to dataset on Google Drive
-    hourly_radiation_df = pd.read_csv(HOME_DIR + '/data/dataset1_HourlySolarRadiationProcessed_s3.csv')
-    # hourly_radiation_df = pd.read_csv(os.path.join("..", "data", "dataset1_HourlySolarRadiationProcessed.csv"))
+    hourly_radiation_df = pd.read_csv(hourly_radiation_obj)
     hourly_radiation_df['Hourly_DateTime'] = pd.to_datetime(hourly_radiation_df['Hourly_DateTime'])
 
 

@@ -10,6 +10,14 @@ from domain_logic.constants import *
 from init_config import multiplicative_decomposed_trend, multiplicative_decomposed_seasonal, N_FORECASTED_PERIODS
 
 
+def find_nth(haystack, needle, n):
+    start = haystack.find(needle)
+    while start >= 0 and n > 1:
+        start = haystack.find(needle, start+len(needle))
+        n -= 1
+    return start
+
+
 def get_extrapolated_trend(trend):
     X = trend.index[:, np.newaxis]
     y = trend.values[:, np.newaxis]
@@ -215,7 +223,7 @@ def predict_out_of_df(test_model, df_scaler, original_df, test_df, input_feature
               dp.Table(statistics_df, caption="Dataframe of forecast statistics"),
               "## Dataframe of forecast values",
               dp.Table(result_df, caption="Dataframe of forecast values")
-              ).save(path='./report.html')
+              ).save(path='./results/report.html')
     # print('report_html -- ', report_html._gen_report(embedded=False, title='Model title'))
     #
     # with open(HOME_DIR + '/results/report.html', 'w') as html_file:

@@ -5,3 +5,5 @@ keras==2.9.0
 tensorflow==2.9.1
 sklearn
 plotly==5.8.0
+boto3
+python-dotenv==0.20.0
