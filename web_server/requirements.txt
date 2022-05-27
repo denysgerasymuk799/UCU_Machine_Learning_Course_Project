@@ -1,0 +1,7 @@
+fastapi
+datapane==0.14.0
+uvicorn==0.17.6
+keras==2.9.0
+tensorflow==2.9.1
+sklearn
+plotly==5.8.0
