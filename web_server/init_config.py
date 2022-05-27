@@ -7,17 +7,18 @@ import pandas as pd
 from dotenv import load_dotenv
 from keras.models import load_model
 
-from web_server.domain_logic.constants import *
+from domain_logic.constants import *
 
 N_FORECASTED_PERIODS = 1
 load_dotenv(dotenv_path='./web_server.env')
 
 # Accessing the S3 buckets using boto3 client
-s3_client = boto3.client('s3')
+s3_client = boto3.client('s3',
+                         aws_access_key_id=os.getenv('ACCESS_KEY'),
+                         aws_secret_access_key=os.getenv('SECRET_ACCESS_KEY'),
+                         region_name=os.getenv('REGION_NAME')
+                         )
 s3_bucket_name = os.getenv('BUCKET_NAME')
-s3 = boto3.resource('s3',
-                    aws_access_key_id=os.getenv('ACCESS_KEY'),
-                    aws_secret_access_key=os.getenv('SECRET_ACCESS_KEY'))
 
 # Import the custom model
 os.makedirs('results', exist_ok=True)

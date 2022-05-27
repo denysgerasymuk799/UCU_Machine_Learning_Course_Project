@@ -1,3 +1,6 @@
+connect_to_ec2.sh
+*.pem
+*.env
 report.html
 
 source/logs/fit/*

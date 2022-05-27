@@ -6,8 +6,8 @@ from fastapi import FastAPI, Request, Response
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-from web_server.domain_logic.constants import *
-from web_server.domain_logic.service import predict_out_of_df, find_nth
+from domain_logic.constants import *
+from domain_logic.service import predict_out_of_df, find_nth
 from init_config import reconstructed_model, delta_scaler, N_FORECASTED_PERIODS, hourly_radiation_df, \
     s3_client, s3_bucket_name, trend_obj, seasonal_obj, hourly_radiation_obj
 
