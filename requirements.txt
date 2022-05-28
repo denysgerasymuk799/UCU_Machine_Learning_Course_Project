@@ -1,4 +1,4 @@
-statsmodels
+statsmodels==0.12.2
 numpy==1.19.2
 matplotlib
 pandas
@@ -10,3 +10,4 @@ tensorflow
 keras
 convertdate
 xgboost
+joblib==1.1.0

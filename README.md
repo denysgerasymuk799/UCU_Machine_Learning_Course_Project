@@ -1,5 +1,9 @@
 # UCU_Machine_Learning_Course_Project
 
+## Project Aim
+
+Forecast the amount of Solar Radiation 10-15 hours ahead.
+
 ## How to run the project
 
 ```shell
