@@ -2,7 +2,8 @@
 
 ## Project Aim
 
-Forecast the amount of Solar Radiation 10-15 hours ahead.
+Forecast the amount of Solar Radiation 10-15 hours ahead (`source` directory).
+Make productization for the best model (`web_server` directory).
 
 ## How to run the project
 

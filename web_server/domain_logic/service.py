@@ -224,8 +224,3 @@ def predict_out_of_df(test_model, df_scaler, original_df, test_df, input_feature
               "## Dataframe of forecast values",
               dp.Table(result_df, caption="Dataframe of forecast values")
               ).save(path='./results/report.html')
-    # print('report_html -- ', report_html._gen_report(embedded=False, title='Model title'))
-    #
-    # with open(HOME_DIR + '/results/report.html', 'w') as html_file:
-    #     html_file.write(report_html.__str__())
-    # ).save(path=HOME_DIR + '/results/report.html', open=True)
