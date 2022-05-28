@@ -2,6 +2,7 @@ connect_to_ec2.sh
 *.pem
 *.env
 report.html
+web_Server/results/
 
 source/logs/fit/*
 source/.ipynb_checkpoints
